@@ -36,18 +36,21 @@ jobs:
         run: |
           bump-my-version bump patch
           echo "bumped=true" >> $GITHUB_ENV
+          git push && git push --tags
 
       - id: bump-minor
         if: contains(github.event.pull_request.labels.*.name, 'bump:minor')
         run: |
           bump-my-version bump minor
           echo "bumped=true" >> $GITHUB_ENV
+          git push && git push --tags
 
       - id: bump-major
         if: contains(github.event.pull_request.labels.*.name, 'bump:major')
         run: |
           bump-my-version bump major
           echo "bumped=true" >> $GITHUB_ENV
+          git push && git push --tags
 
       - id: workflow-output
         run: |
