@@ -68,11 +68,11 @@ jobs:
               const response = await github.rest.repos.createRelease({
                 draft: false,
                 generate_release_notes: true,
-                name: v${{ needs.version-bump.outputs.current_version }},
+                name: 'v${{ needs.version-bump.outputs.current_version }}',
                 owner: context.repo.owner,
                 prerelease: false,
                 repo: context.repo.repo,
-                tag_name: v${{ needs.version-bump.outputs.current_version }},
+                tag_name: 'v${{ needs.version-bump.outputs.current_version }}',
               });
 
               core.exportVariable('RELEASE_ID', response.data.id);
