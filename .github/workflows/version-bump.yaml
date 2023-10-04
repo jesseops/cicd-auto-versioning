@@ -58,6 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: version-bump
     if: needs.version-bump.outputs.bumped == 'true'
+    permissions:
+      contents: write
     steps:
       - name: "Create release"
         uses: "actions/github-script@v6"
