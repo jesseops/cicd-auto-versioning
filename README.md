@@ -4,4 +4,6 @@ This workflow should enable automatic versioning + release creation upon merging
 
 Note: you have to actually include the appropriate labels...
 
-OH THE HUMANITY
+- bump:patch
+- bump:minor
+- bump:major
