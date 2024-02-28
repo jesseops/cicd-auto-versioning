@@ -9,6 +9,7 @@ on:
         description: "The type of version bump to perform"
         required: true
         default: "patch"
+        type: choice
         options:
           - "patch"
           - "minor"
