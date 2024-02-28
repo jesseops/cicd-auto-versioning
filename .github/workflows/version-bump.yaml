@@ -3,6 +3,16 @@
 name: Version Bump
 
 on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "The type of version bump to perform"
+        required: true
+        default: "patch"
+        options:
+          - "patch"
+          - "minor"
+          - "major"
   pull_request:
     branches:
       - "main"
@@ -11,7 +21,7 @@ on:
 
 jobs:
   version-bump:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -34,21 +44,21 @@ jobs:
           git config --global user.email "${{ github.repository_owner }}-cicd@users.noreply.github.com"
 
       - id: bump-patch
-        if: contains(github.event.pull_request.labels.*.name, 'bump:patch')
+        if: contains(github.event.pull_request.labels.*.name, 'bump:patch') || github.event.inputs.bump == 'patch'
         run: |
           bump-my-version bump patch
           echo "bumped=true" >> $GITHUB_ENV
           git push && git push --tags
 
       - id: bump-minor
-        if: contains(github.event.pull_request.labels.*.name, 'bump:minor')
+        if: contains(github.event.pull_request.labels.*.name, 'bump:minor') || github.event.inputs.bump == 'minor'
         run: |
           bump-my-version bump minor
           echo "bumped=true" >> $GITHUB_ENV
           git push && git push --tags
 
       - id: bump-major
-        if: contains(github.event.pull_request.labels.*.name, 'bump:major')
+        if: contains(github.event.pull_request.labels.*.name, 'bump:major') || github.event.inputs.bump == 'major'
         run: |
           bump-my-version bump major
           echo "bumped=true" >> $GITHUB_ENV
